@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Comic Neue', cursive;
+}
+
+body {
+    height: 100vh;
+    background-image: linear-gradient(to bottom, #051937, #071530, #080f29, #070822, #03011c);
+}
+
+h1 {
+    display: block;
+    font-size: 32px;
+    color: #03a9f4;
+    text-align: center;
+    margin: 30px;
+}
+
+.gothamMemoryGame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.startGame {
+    margin: 20px auto;
+    width: 150px;
+    padding: 5px;
+    display: block;
+    background-color: #545454;
+    color: #ffffff;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: 0.5s;
+}
+
+.startGame:hover {
+    background: #03a9f4;
+    color: black;
+}
+
+.container-main {
+    margin: 20px;
+    /* border: 3px solid #03a9f4; */
+    /* border-radius: 20px; */
+    /* padding: 20px; */
+}
+
+.subcontainer-1 {
+    display: flex;
+    justify-content: center;
+    margin: 2px;
+}
+
+.subcontainer-2 {
+    display: flex;
+    justify-content: center;
+
+}
+
+.card {
+    width: 100px;
+    height: 150px;
+    margin: 10px;
+    transform-style: preserve-3d;
+    transition: .5s;
+    border-radius: 10%;
+}
+
+.card:active {
+    transform: scale(.97);
+}
+
+.card.flip {
+    transform: rotateY(180deg);
+}
+
+.front-face {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    border-radius: 10%;
+    border: 3px solid #03a9f4;
+    background-image: linear-gradient(to right top, #051937, #131f50, #2e2266, #501e78, #760583);
+    transition: 0.3s;
+}
+
+.front-face:hover {
+    transform: scale(1.1);
+}
+
+.container-levels {
+    width: 200px;
+    height: 200px;
+    background: black;
+    border: 3px solid #03a9f4;
+    border-radius: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 100px;
+}
+
+.inner-container-levels {
+    width: 100%;
+    color: white;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.levels {
+    width: 100%;
+    font-size: 26px;
+    margin: 10px;
+    padding: 2px 0;
+    text-align: center;
+    background: #545454;
+    transition: 0.3s;
+}
+
+.levels:hover {
+    box-shadow: cornflowerblue 0px 0px 5px 1px;
+    cursor: pointer;
+}
+
+.chosenLevel {
+    background: #03a9f4;
+    color: black;
+    cursor: pointer;
+}
+

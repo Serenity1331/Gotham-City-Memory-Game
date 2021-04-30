@@ -1,17 +1,19 @@
 function mainFunc() {
 
-    createCards(6);
-    let cards = document.querySelectorAll(".card");
+    createCards(8);
+    // let cards = document.querySelectorAll(".card");
     let levels = document.querySelectorAll('.levels');
+    let currentLevel = document.querySelector('.chosenLevel').innerHTML;
     let cardsClicked = [];
     let gameStart = true;
 
-    populateCards(6);
+    populateCards(8);
     chooseLevelListener();
-    addClickListeners();
+    soundSwitchListener();
     startGameListener();
 
     function createCards(num) {
+
         const str = `
         <div class="card">
             <div class="front-face"></div>
@@ -19,14 +21,17 @@ function mainFunc() {
 
         let rowFirst = document.querySelector('.subcontainer-1');
         let rowSecond = document.querySelector('.subcontainer-2');
-   
-        for (let i = 0; i < num; i++) {
+        let rowThird = document.querySelector('.subcontainer-3');
 
-            if (i < num/2) {
-                rowFirst.insertAdjacentHTML('beforeend', str);
-            } else {
-                rowSecond.insertAdjacentHTML('beforeend', str);
-            }
+        if (num < 12) {
+            rowFirst.insertAdjacentHTML('beforeend', str.repeat(num/2));
+            rowSecond.insertAdjacentHTML('beforeend', str.repeat(num/2));
+        }
+
+        if (num >= 12) {
+            rowFirst.insertAdjacentHTML('beforeend', str.repeat(num/3));
+            rowSecond.insertAdjacentHTML('beforeend', str.repeat(num/3));
+            rowThird.insertAdjacentHTML('beforeend', str.repeat(num/3));
         }
     }
 
@@ -36,16 +41,22 @@ function mainFunc() {
             'batman': 'url(images/batman.jpg) no-repeat center',
             'joker': 'url(images/joker.jpg) no-repeat center',
             'catwoman': 'url(images/catwoman.jpg) no-repeat center',
+            'penguin': 'url(images/penguin.jpg) no-repeat center',
         }
         const levelTwo = {'riddler': 'url(images/riddler.jpg) no-repeat center'}
         const levelThree = {'poisonIvy': 'url(images/poisonIvy.jpg) no-repeat center'}
-
-        switch(num) {
-            case 6: return levelOne;
-            case 8: return {...levelOne, ...levelTwo};
-            case 10: return {...levelOne, ...levelTwo, ...levelThree};
+        const levelFour = {
+            'harleyQuinn': 'url(images/harleyQuinn.jpg) no-repeat center',
+            'bane': 'url(images/bane.jpg) no-repeat center',
+            'twoFace': 'url(images/twoFace.jpg) no-repeat center',
         }
 
+        switch(num) {
+            case 8: return levelOne;
+            case 10: return {...levelOne, ...levelTwo};
+            case 12: return {...levelOne, ...levelTwo, ...levelThree};
+            case 18: return {...levelOne, ...levelTwo, ...levelThree, ...levelFour};
+        }
     }
 
     function populateCards(num) {
@@ -60,10 +71,10 @@ function mainFunc() {
         });
     }
 
+    // to be changed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     function removeCards() {
         let subcontainers = document.querySelectorAll('.subcontainer');
         subcontainers.forEach(node => {
-            console.log(node.children);
             node.innerHTML = '';
         })
     }
@@ -83,7 +94,6 @@ function mainFunc() {
     
         // cards not matching
         if (!matchCards(card1, card2)) {
-            
             unflipTwo(cardsClicked);
             setTimeout(() => addClickListeners(), 2000);
             
@@ -91,17 +101,27 @@ function mainFunc() {
             playMatchedAudio();
             addClickListeners();    
         } 
-    
+        
+        let cardsNum = +document.querySelector('.chosenLevel').getAttribute('cards');
         cardsClicked = [];
-        youWin();
+        youWin(cardsNum);
     }
 
-    function youWin(num=6) {
+    function youWin(num) {
+
         let flipped = document.querySelectorAll('.flip');
+        let container = document.querySelector('.container-main');
+        let message = 
+            `<div class="success">
+                <h1 class="congrats">Congratulations!
+                    <div class="stars"></div>
+                </h1>      
+            </div>`;
+
         if (flipped.length === num) {
-            console.log('Congratulations!');
             gameStart = true;
-            // hideCards();
+            container.insertAdjacentHTML('beforeend', message);
+            // hideCards();  
         }
     }
 
@@ -120,7 +140,7 @@ function mainFunc() {
         let cards = document.querySelectorAll('.card');
         cards.forEach(card => {
             setTimeout(() => card.classList.add('flip'), time);
-            time += 200; 
+            time += 150; 
         })
     }
     
@@ -129,19 +149,32 @@ function mainFunc() {
         let cards = document.querySelectorAll('.card');
         cards.forEach(card => {
             setTimeout(() => card.classList.remove('flip'), time);
-            time += 200; 
+            time += 150; 
         })
+    }
+
+    function getHideDelay() {
+
+        switch(currentLevel) {
+            case 'Level 1': return 3000;
+            case 'Level 2': return 4000;
+            case 'Level 3': return 5000;
+            case 'Final Level': return 7000;
+        }
     }
     
     function startGameListener() {
-        
+
         let btn = document.querySelector('.startGame');
         btn.addEventListener('click', function() {
 
+            let time = getHideDelay();
+
             if (gameStart) {
                 showCards();
-                setTimeout(() => hideCards(), 3000);
+                setTimeout(() => hideCards(), time);
                 gameStart = false;
+                addClickListeners();
                 // this.style.opacity = 0;
             }
             
@@ -150,12 +183,13 @@ function mainFunc() {
 
     function chooseLevelListener() {
         
-        levels.forEach((level, index) => {
-            level.addEventListener('click', function() {   
-                
+        levels.forEach(level => {
+            level.addEventListener('click', function() {
+
                 clearChosenLevels();
                 removeCards();
                 this.classList.add('chosenLevel');
+                currentLevel = this.innerHTML;
 
                 let cardsNum = +this.getAttribute('cards');
                 createCards(cardsNum);
@@ -207,11 +241,26 @@ function unflipTwo(lst) {
 }
 
 function playMatchedAudio() {
-    setTimeout(() => {
-        let audio = document.createElement('audio');
-        audio.src = 'audio/success.mp3';
-        audio.play();
-    }, 700);
+
+    let status = document.querySelector('.soundOn');
+    if (status) {
+        setTimeout(() => {
+            let audio = document.createElement('audio');
+            audio.src = 'audio/success.mp3';
+            audio.play();
+        }, 150);
+    }
 }
+
+function soundSwitchListener() {
+
+    let switcher = document.querySelector('.soundOn');
+    switcher.addEventListener('click', function() {
+        this.classList.toggle('soundOn');
+        this.classList.toggle('soundOff');
+    })
+}
+
+
 
 // Support functions ---------------

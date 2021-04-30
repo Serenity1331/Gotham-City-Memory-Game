@@ -12,25 +12,29 @@
 	
 	<h1>Gotham City Memory Game</h1>
 	<button class="startGame">Start</button>
+	<div class="soundOn"></div>
 
-	<section class="gothamMemoryGame">
+	<div class="container-main">
 
-			<div class="container-main">
+		<div class="subcontainer subcontainer-1"></div>
+		<div class="subcontainer subcontainer-2"></div>
+		<div class="subcontainer subcontainer-3"></div>
 
-				<div class="subcontainer subcontainer-1"></div>
-				<div class="subcontainer subcontainer-2"></div>
+		<!-- <div class="success hidden">
+			<h1 class="congrats">Congratulations!
+				<div class="stars"></div>
+			</h1>
+		</div> -->
+	</div>
 
-			</div>
-
-			<div class="container-levels">
-				<div class="inner-container-levels">
-					<div class="levels chosenLevel" cards="6">Level 1</div>
-					<div class="levels" cards="8">Level 2</div>
-					<div class="levels" cards="10">Level 3</div>
-				</div>
-			</div>	
-
-	</section>
+	<div class="container-levels">
+		<div class="inner-container-levels">
+			<div class="levels chosenLevel" cards="8">Level 1</div>
+			<div class="levels" cards="10">Level 2</div>
+			<div class="levels" cards="12">Level 3</div>
+			<div class="levels" cards="18">Final Level</div>
+		</div>
+	</div>	
 
 	<script type="text/javascript" src="script.js"></script>
 </body>

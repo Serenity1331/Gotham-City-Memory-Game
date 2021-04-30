@@ -1,26 +1,27 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Comic Neue', cursive;
+    /* font-family: 'Comic Neue', cursive; */
 }
+
+@font-face {
+    font-family: 'Crimefighter';
+    src:  url('fonts/crimefighter-bb.regular.ttf');
+  }
 
 body {
     height: 100vh;
+    position: relative;
+    font-family: "Crimefighter", 'Comic Neue';
     background-image: linear-gradient(to bottom, #051937, #071530, #080f29, #070822, #03011c);
 }
 
 h1 {
     display: block;
-    font-size: 32px;
+    font-size: 30px;
     color: #03a9f4;
     text-align: center;
     margin: 30px;
-}
-
-.gothamMemoryGame {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .startGame {
@@ -34,6 +35,7 @@ h1 {
     font-size: 20px;
     font-weight: bold;
     transition: 0.5s;
+    font-family: "Crimefighter", 'Comic Neue';
 }
 
 .startGame:hover {
@@ -42,22 +44,17 @@ h1 {
 }
 
 .container-main {
-    margin: 20px;
+    position: absolute;
+    right: 600px;
+    /* margin: 20px; */
     /* border: 3px solid #03a9f4; */
     /* border-radius: 20px; */
     /* padding: 20px; */
 }
 
-.subcontainer-1 {
+.subcontainer {
     display: flex;
     justify-content: center;
-    margin: 2px;
-}
-
-.subcontainer-2 {
-    display: flex;
-    justify-content: center;
-
 }
 
 .card {
@@ -93,15 +90,18 @@ h1 {
 }
 
 .container-levels {
-    width: 200px;
-    height: 200px;
+    position: absolute;
+    width: 300px;
+    height: 320px;
     background: black;
     border: 3px solid #03a9f4;
     border-radius: 10%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 100px;
+    top: 135px;
+    right: 250px;
+    /* margin-bottom: 100px; */
 }
 
 .inner-container-levels {
@@ -117,7 +117,7 @@ h1 {
 .levels {
     width: 100%;
     font-size: 26px;
-    margin: 10px;
+    margin: 15px;
     padding: 2px 0;
     text-align: center;
     background: #545454;
@@ -132,6 +132,88 @@ h1 {
 .chosenLevel {
     background: #03a9f4;
     color: black;
+    font-weight: bold;
     cursor: pointer;
+}
+
+.soundOn, .soundOff {
+    width: 30px;
+    height: 30px;
+    top: 0px;
+    right: 50px;
+    /* background:red; */
+    position: absolute;
+    opacity: 0.5;
+}
+
+.soundOn {
+    background: url(images/soundOn.png) no-repeat center;
+    background-size: contain;
+}
+
+.soundOff {
+    background: url(images/soundOff.png) no-repeat center;
+    background-size: contain;
+}
+
+.soundOn:hover,
+.soundOff:hover {
+    opacity: 1;
+}
+
+.success {
+    position: absolute;
+    display: block;
+    top: 20%;
+    left: 10%;
+    width: 500px;
+    height: 100px;
+    border-radius: 10px;
+    animation: bounceIn;
+    animation-duration: 2s;
+    z-index: 1;
+    color: white;
+    border: 2px solid greenyellow;
+    background-image: linear-gradient(to bottom, #051937, #071530, #080f29, #070822, #03011c);
+}
+
+.congrats {
+    color: greenyellow;
+    position: relative;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.stars {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: -15px;
+    background: url(images/stars.png) no-repeat center;
+    background-size: contain;
+    z-index: 2;
+}
+
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.1);
+        opacity: 0;
+    }
+    
+    60% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 

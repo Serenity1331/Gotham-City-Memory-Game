@@ -12,6 +12,7 @@
 body {
     height: 100vh;
     position: relative;
+    outline: 0;
     font-family: "Crimefighter", 'Comic Neue';
     background-image: linear-gradient(to bottom, #051937, #071530, #080f29, #070822, #03011c);
 }

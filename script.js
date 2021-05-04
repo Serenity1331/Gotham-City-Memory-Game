@@ -1,11 +1,10 @@
 function mainFunc() {
 
     createCards(8);
-    // let cards = document.querySelectorAll(".card");
     let levels = document.querySelectorAll('.levels');
     let currentLevel = document.querySelector('.chosenLevel').innerHTML;
     let cardsClicked = [];
-    let gameStart = true;
+    let timeOut;
 
     populateCards(8);
     chooseLevelListener();
@@ -95,7 +94,7 @@ function mainFunc() {
         // cards not matching
         if (!matchCards(card1, card2)) {
             unflipTwo(cardsClicked);
-            setTimeout(() => addClickListeners(), 2000);
+            timeOut = setTimeout(() => addClickListeners(), 2000);
             
         } else {
             playMatchedAudio();
@@ -109,6 +108,7 @@ function mainFunc() {
 
     function youWin(num) {
 
+        let startBtn = document.querySelector('.startGame');
         let flipped = document.querySelectorAll('.flip');
         let container = document.querySelector('.container-main');
         let message = 
@@ -119,9 +119,12 @@ function mainFunc() {
             </div>`;
 
         if (flipped.length === num) {
-            gameStart = true;
             container.insertAdjacentHTML('beforeend', message);
-            // hideCards();  
+            chooseLevelListener();
+            hideCards();
+            startBtn.classList.remove('hidden');
+            startBtn.disabled = false;
+            removeClickListeners();
         }
     }
 
@@ -139,7 +142,7 @@ function mainFunc() {
         let time = 0;
         let cards = document.querySelectorAll('.card');
         cards.forEach(card => {
-            setTimeout(() => card.classList.add('flip'), time);
+            timeOut = setTimeout(() => card.classList.add('flip'), time);
             time += 150; 
         })
     }
@@ -148,7 +151,7 @@ function mainFunc() {
         let time = 0;
         let cards = document.querySelectorAll('.card');
         cards.forEach(card => {
-            setTimeout(() => card.classList.remove('flip'), time);
+            timeOut = setTimeout(() => card.classList.remove('flip'), time);
             time += 150; 
         })
     }
@@ -169,19 +172,26 @@ function mainFunc() {
         btn.addEventListener('click', function() {
 
             let time = getHideDelay();
+            showCards();
+            timeOut = setTimeout(() => hideCards(), time);
+        
+            setTimeout(() => addClickListeners(), 3000);
+            btn.disabled = true;
+            btn.classList.add('hidden');
 
-            if (gameStart) {
-                showCards();
-                setTimeout(() => hideCards(), time);
-                gameStart = false;
-                addClickListeners();
-                // this.style.opacity = 0;
+             // Removing the "congrats" message
+            let winMessage = document.querySelector('.success');
+            if (winMessage) {
+                winMessage.remove();
             }
-            
+
         })
     }
 
     function chooseLevelListener() {
+
+        let startBtn = document.querySelector('.startGame');
+        let winMessage = document.querySelector('.success');
         
         levels.forEach(level => {
             level.addEventListener('click', function() {
@@ -194,15 +204,43 @@ function mainFunc() {
                 let cardsNum = +this.getAttribute('cards');
                 createCards(cardsNum);
                 populateCards(cardsNum);
-                addClickListeners();  
-                gameStart = true;
 
+                if (winMessage) {
+                    winMessage.remove();
+                }
+    
+                startBtn.disabled = false;
+                startBtn.classList.remove('hidden');
+                stopTimeout();
             }) 
         })
     }
 
     function clearChosenLevels() {
         levels.forEach(level => level.classList.remove('chosenLevel'));
+    }
+
+    function unflipTwo(lst) {
+        timeOut = setTimeout(() => {
+            lst[0].classList.remove('flip');
+            lst[1].classList.remove('flip');
+        }, 1500);
+    }
+    
+    function playMatchedAudio() {
+    
+        let status = document.querySelector('.soundOn');
+        if (status) {
+            timeOut = setTimeout(() => {
+                let audio = document.createElement('audio');
+                audio.src = 'audio/success.mp3';
+                audio.play();
+            }, 150);
+        }
+    }
+
+    function stopTimeout() {
+        clearTimeout(timeOut);
     }
     
 }
@@ -231,25 +269,6 @@ function shuffleKeys(arr) {
 
 function matchCards(a, b) {
     return a.style.background === b.style.background;
-}
-
-function unflipTwo(lst) {
-    setTimeout(() => {
-        lst[0].classList.remove('flip');
-        lst[1].classList.remove('flip');
-    }, 1500);
-}
-
-function playMatchedAudio() {
-
-    let status = document.querySelector('.soundOn');
-    if (status) {
-        setTimeout(() => {
-            let audio = document.createElement('audio');
-            audio.src = 'audio/success.mp3';
-            audio.play();
-        }, 150);
-    }
 }
 
 function soundSwitchListener() {

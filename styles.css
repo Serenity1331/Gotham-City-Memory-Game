@@ -1,7 +1,6 @@
 * {
     margin: 0;
     padding: 0;
-    /* font-family: 'Comic Neue', cursive; */
 }
 
 @font-face {
@@ -13,6 +12,7 @@ body {
     height: 100vh;
     position: relative;
     font-family: "Crimefighter", 'Comic Neue';
+    text-align: center;
     background-image: linear-gradient(to bottom, #051937, #071530, #080f29, #070822, #03011c);
 }
 
@@ -21,7 +21,7 @@ h1 {
     font-size: 30px;
     color: #03a9f4;
     text-align: center;
-    margin: 30px;
+    margin-top: 30px;
 }
 
 .startGame {
@@ -29,14 +29,14 @@ h1 {
     margin: 20px auto;
     width: 150px;
     padding: 5px;
-    display: block;
     background-color: #545454;
     color: #ffffff;
     border-radius: 20px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
-    transition: 0.5s;
     font-family: "Crimefighter", 'Comic Neue';
+    opacity: 1;
+    transition: 0.4s;
 }
 
 .startGame:hover {
@@ -44,13 +44,13 @@ h1 {
     color: black;
 }
 
+.container {
+    display: flex;
+    justify-content: center;
+}
+
 .container-main {
-    position: absolute;
-    right: 600px;
-    /* margin: 20px; */
-    /* border: 3px solid #03a9f4; */
-    /* border-radius: 20px; */
-    /* padding: 20px; */
+    max-width: 800px;
 }
 
 .subcontainer {
@@ -61,7 +61,7 @@ h1 {
 .card {
     width: 100px;
     height: 150px;
-    margin: 10px;
+    margin: 8px;
     transform-style: preserve-3d;
     transition: .5s;
     border-radius: 10%;
@@ -91,18 +91,14 @@ h1 {
 }
 
 .container-levels {
-    position: absolute;
-    width: 300px;
-    height: 320px;
+    width: 250px;
+    height: 230px;
     background: black;
     border: 3px solid #03a9f4;
     border-radius: 10%;
     display: flex;
-    align-items: center;
     justify-content: center;
-    top: 135px;
-    right: 250px;
-    /* margin-bottom: 100px; */
+    margin-left: 20px;
 }
 
 .inner-container-levels {
@@ -117,8 +113,8 @@ h1 {
 
 .levels {
     width: 100%;
-    font-size: 26px;
-    margin: 15px;
+    font-size: 20px;
+    margin: 10px;
     padding: 2px 0;
     text-align: center;
     background: #545454;
@@ -142,7 +138,6 @@ h1 {
     height: 30px;
     top: 0px;
     right: 50px;
-    /* background:red; */
     position: absolute;
     opacity: 0.5;
 }
@@ -184,11 +179,8 @@ h1 {
 }
 
 .hidden {
-    visibility: hidden;
-}
-
-.visible {
-    visibility: visible;
+    transition: 2s;
+    opacity: 0;
 }
 
 .stars {
@@ -218,3 +210,62 @@ h1 {
     }
 }
 
+@media (max-width: 1010px) {
+
+    .container-levels {
+        height: 200px;
+        width: 200px;
+    }
+    
+    .levels {
+        font-size: 16px;
+        margin: 10px;
+    }
+
+    .card {
+        width: 75px;
+        height: 100px;
+        margin: 5px;
+    }
+
+    .front-face {
+        border: 2px solid #03a9f4;
+    }
+}
+
+@media (max-width: 750px) {
+    .container-levels {
+        height: 150px;
+        width: 150px;
+    }
+
+    .levels {
+        font-size: 14px;
+        margin: 8px;
+    }
+
+    .card {
+        width: 50px;
+        height: 75px;
+        margin: 4px;
+    }
+
+    .front-face {
+        border: 1.5px solid #03a9f4;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .startGame {
+        width: 75px;
+        font-size: 12px;
+    }
+
+    .soundOn, .soundOff {
+        width: 22px;
+        height: 22px;
+        right: 15px;
+    }
+}
